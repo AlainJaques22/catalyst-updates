@@ -433,34 +433,6 @@
   const params = new URLSearchParams(window.location.search);
   const studioVersion = params.get('v');
 
-  // ── Apply theme from query params ──
-  function hexToRgb(hex) {
-    hex = hex.replace('#', '');
-    return [
-      parseInt(hex.substring(0, 2), 16),
-      parseInt(hex.substring(2, 4), 16),
-      parseInt(hex.substring(4, 6), 16)
-    ];
-  }
-
-  const root = document.documentElement;
-  const primary = params.get('primary');
-  const primaryDark = params.get('primaryDark');
-  const primaryLight = params.get('primaryLight');
-
-  if (primary) {
-    const [r, g, b] = hexToRgb(primary);
-    root.style.setProperty('--primary', primary);
-    root.style.setProperty('--primary-dim', `rgba(${r},${g},${b},0.12)`);
-    root.style.setProperty('--primary-glow', `rgba(${r},${g},${b},0.06)`);
-  }
-  if (primaryDark) {
-    root.style.setProperty('--primary-dark', primaryDark);
-  }
-  if (primaryLight) {
-    root.style.setProperty('--primary-light', primaryLight);
-  }
-
   // ── Version banner logic ──
   const LATEST_VERSION = '0.2.0';
 
