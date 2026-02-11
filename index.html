@@ -1,156 +1,480 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catalyst Updates</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalyst Studio Updates</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1e1e1e;
+    --surface: #262626;
+    --surface-hover: #363636;
+    --surface-raised: #333336;
+    --border: #363636;
+    --text: #dcddde;
+    --text-muted: #888888;
+    --text-dim: #6d6d6d;
+    --primary: #22d3ee;
+    --primary-dark: #06b6d4;
+    --primary-light: #67e8f9;
+    --primary-dim: rgba(34, 211, 238, 0.12);
+    --primary-glow: rgba(34, 211, 238, 0.06);
+    --green: #50fa7b;
+    --green-dim: rgba(80, 250, 123, 0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96, 165, 250, 0.12);
+    --red: #ff5555;
+    --purple: #a78bfa;
+    --purple-dim: rgba(167, 139, 250, 0.12);
+  }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #1e1e1e;
-      color: #dcddde;
-      line-height: 1.6;
-      padding: 32px 24px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    a { color: #22d3ee; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 32px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #363636;
-    }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    .header svg { flex-shrink: 0; }
-    .header h1 { font-size: 20px; font-weight: 600; }
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
 
-    .version-banner {
-      background: #262626;
-      border: 1px solid #363636;
-      border-left: 3px solid #22d3ee;
-      border-radius: 6px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
-    }
+  /* ── Welcome Hero ── */
+  .welcome {
+    margin-bottom: 32px;
+    animation: fadeIn 0.4s ease-out;
+  }
+  .welcome-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .welcome h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, var(--text) 60%, var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .welcome p {
+    font-size: 14px;
+    color: var(--text-muted);
+    max-width: 540px;
+  }
 
-    .version-banner h2 {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 4px;
-      color: #22d3ee;
-    }
+  /* ── Version Banner ── */
+  .version-banner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 28px;
+    border: 1px solid;
+    animation: fadeSlideIn 0.4s ease-out 0.05s both;
+  }
+  .version-banner.up-to-date {
+    background: var(--green-dim);
+    border-color: rgba(80, 250, 123, 0.2);
+  }
+  .version-banner.update-available {
+    background: var(--primary-dim);
+    border-color: var(--primary-dim);
+  }
+  .version-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .up-to-date .version-icon { background: rgba(80, 250, 123, 0.15); }
+  .update-available .version-icon { background: var(--primary-dim); }
+  .version-text { flex: 1; }
+  .version-text strong { font-weight: 600; font-size: 14px; }
+  .version-text .sub { font-size: 12.5px; color: var(--text-muted); margin-top: 1px; }
+  .version-btn {
+    padding: 7px 16px; border-radius: 6px; border: none;
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s; text-decoration: none;
+    color: var(--bg); background: var(--primary);
+  }
+  .version-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
-    .version-banner p { font-size: 13px; color: #888888; }
+  /* ── Sections ── */
+  .section {
+    margin-bottom: 26px;
+    animation: fadeSlideIn 0.4s ease-out both;
+  }
+  .section:nth-child(3) { animation-delay: 0.08s; }
+  .section:nth-child(4) { animation-delay: 0.12s; }
+  .section:nth-child(5) { animation-delay: 0.16s; }
+  .section:nth-child(6) { animation-delay: 0.20s; }
 
-    .update-card {
-      background: #262626;
-      border: 1px solid #363636;
-      border-radius: 6px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
+  .section-header {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1.2px;
+    color: var(--text-dim);
+  }
 
-    .update-card .date {
-      font-size: 12px;
-      color: #888888;
-      margin-bottom: 8px;
-    }
+  /* ── Your Stack ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .stack-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: all 0.2s;
+  }
+  .stack-card:hover {
+    border-color: var(--primary-dim);
+    background: var(--surface-hover);
+  }
+  .stack-top {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 6px;
+  }
+  .stack-icon {
+    width: 30px; height: 30px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .stack-name { font-size: 13px; font-weight: 600; }
+  .stack-version {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; color: var(--text-dim);
+    margin-left: auto;
+  }
+  .stack-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
 
-    .update-card h3 {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
+  /* ── Quick Tip ── */
+  .tip-card {
+    background: var(--primary-glow);
+    border: 1px solid var(--primary-glow);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .tip-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .tip-content { flex: 1; }
+  .tip-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--primary); }
+  .tip-text { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .tip-text code {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    background: var(--primary-glow); padding: 1px 5px;
+    border-radius: 3px; color: var(--primary);
+  }
 
-    .update-card p {
-      font-size: 13px;
-      color: #bcbcbc;
-    }
+  /* ── Changelog ── */
+  .changelog-entry {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px; margin-bottom: 10px;
+  }
+  .changelog-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  }
+  .changelog-version {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px; font-weight: 600; color: var(--primary);
+  }
+  .changelog-date { font-size: 12px; color: var(--text-dim); }
+  .changelog-tag {
+    font-size: 10px; font-weight: 600; padding: 2px 7px;
+    border-radius: 4px; margin-left: auto;
+  }
+  .tag-latest { background: var(--green-dim); color: var(--green); }
+  .tag-initial { background: var(--primary-dim); color: var(--primary); }
+  .changelog-items { list-style: none; padding: 0; }
+  .changelog-items li {
+    font-size: 13px; color: var(--text-muted); padding: 3px 0;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .changelog-items li::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 7px;
+  }
+  .cl-feat::before { background: var(--green); }
+  .cl-infra::before { background: var(--blue); }
+  .cl-ui::before { background: var(--purple); }
 
-    .update-card ul {
-      font-size: 13px;
-      color: #bcbcbc;
-      padding-left: 20px;
-      margin-top: 8px;
-    }
+  /* ── Feedback ── */
+  .feedback-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px; text-align: center;
+  }
+  .feedback-card p {
+    font-size: 13px; color: var(--text-muted); margin-bottom: 14px;
+  }
+  .feedback-buttons {
+    display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+  }
+  .fb-btn {
+    padding: 8px 16px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--surface-hover);
+    color: var(--text); font-family: inherit; font-size: 13px;
+    cursor: pointer; transition: all 0.15s; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .fb-btn:hover {
+    border-color: var(--primary); background: var(--primary-dim); color: var(--primary);
+    transform: translateY(-1px);
+  }
+  .fb-btn.primary {
+    background: var(--primary); color: var(--bg);
+    border-color: var(--primary); font-weight: 600;
+  }
+  .fb-btn.primary:hover { filter: brightness(1.1); color: var(--bg); }
 
-    .update-card li { margin-bottom: 4px; }
+  /* ── Footer ── */
+  .footer {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .footer p {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
 
-    .tag {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 4px;
-      margin-right: 6px;
-      text-transform: uppercase;
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    .tag-new { background: rgba(34, 211, 238, 0.15); color: #22d3ee; }
-    .tag-fix { background: rgba(80, 250, 123, 0.15); color: #50fa7b; }
-    .tag-breaking { background: rgba(255, 85, 85, 0.15); color: #ff5555; }
-
-    .feedback {
-      margin-top: 32px;
-      padding-top: 16px;
-      border-top: 1px solid #363636;
-      font-size: 13px;
-      color: #888888;
-    }
-  </style>
+  @media (max-width: 600px) {
+    .stack-grid { grid-template-columns: 1fr; }
+    .container { padding: 20px 16px 80px; }
+  }
+</style>
 </head>
 <body>
-  <div class="header">
-    <svg width="24" height="24" viewBox="0 0 24 24">
-      <path fill="#22d3ee" opacity="0.3" d="M12 3C8.69 3 6 5.69 6 9v4l-2 2v1h16v-1l-2-2V9c0-3.31-2.69-6-6-6z"/>
-      <path fill="#dcddde" d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6V9c0-3.07-1.63-5.64-4.5-6.32V2c0-.83-.67-1.5-1.5-1.5S10.5 1.17 10.5 2v.68C7.64 3.36 6 5.92 6 9v7l-2 2v1h16v-1l-2-2zm-2 1H8V9c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v8z"/>
-    </svg>
-    <h1>Catalyst Updates</h1>
+
+<div class="container">
+
+  <!-- Welcome -->
+  <div class="welcome">
+    <div class="welcome-eyebrow">Catalyst Studio</div>
+    <h1>Your local Camunda development environment</h1>
+    <p>Everything you need to design, deploy, and debug BPMN processes — running entirely on your machine.</p>
   </div>
 
-  <div class="version-banner" id="version-banner" style="display: none;">
-    <h2>A new version is available</h2>
-    <p id="version-message"></p>
+  <!-- Version Banner -->
+  <div class="version-banner up-to-date" id="version-banner">
+    <div class="version-icon" id="version-emoji">&#10003;</div>
+    <div class="version-text">
+      <strong id="banner-title">You're up to date</strong>
+      <div class="sub" id="banner-sub">Running the latest version</div>
+    </div>
+    <a href="https://github.com/AlainJaques22/catalyst-studio/releases" target="_blank" class="version-btn" id="banner-btn" style="display: none;">View Release</a>
   </div>
 
-  <div class="update-card">
-    <div class="date">February 10, 2026</div>
-    <h3><span class="tag tag-new">New</span> Updates tab</h3>
-    <p>Catalyst Studio now includes a live Updates tab so you can stay informed without leaving the app.</p>
-    <ul>
-      <li>Feature announcements delivered directly in Studio</li>
-      <li>Version update notifications when a new release is available</li>
-      <li>Notification badge on the bell icon for new content</li>
-    </ul>
+  <!-- Your Stack -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Your Stack</span>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-top">
+          <div class="stack-icon" style="background: var(--primary-dim);">&#9881;&#65039;</div>
+          <span class="stack-name">BPMN Engine</span>
+          <span class="stack-version">Camunda 7</span>
+        </div>
+        <div class="stack-desc">BPMN engine with REST API. Design processes in the built-in modeler and deploy with one click.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-top">
+          <div class="stack-icon" style="background: var(--blue-dim);">&#128203;</div>
+          <span class="stack-name">Log Viewer</span>
+          <span class="stack-version">Dozzle</span>
+        </div>
+        <div class="stack-desc">Real-time Docker log viewer. Stream and filter logs from all containers in one place.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-top">
+          <div class="stack-icon" style="background: var(--green-dim);">&#128024;</div>
+          <span class="stack-name">Database Browser</span>
+          <span class="stack-version">pgweb</span>
+        </div>
+        <div class="stack-desc">Browse and query your database directly in the browser. Inspect tables, run SQL, export data.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-top">
+          <div class="stack-icon" style="background: var(--purple-dim);">&#9999;&#65039;</div>
+          <span class="stack-name">BPMN Modeler</span>
+          <span class="stack-version">Miragon</span>
+        </div>
+        <div class="stack-desc">Design BPMN processes in the browser and deploy to Camunda with one click. No desktop app needed.</div>
+      </div>
+      <div class="stack-card">
+        <div class="stack-top">
+          <div class="stack-icon" style="background: rgba(251, 191, 36, 0.12);">&#128051;</div>
+          <span class="stack-name">Container Manager</span>
+          <span class="stack-version">Portainer</span>
+        </div>
+        <div class="stack-desc">Monitor and manage your Docker containers. Restart services, view resource usage, check health.</div>
+      </div>
+    </div>
   </div>
 
-  <div class="feedback">
-    Have feedback or feature requests? <a href="https://github.com/AlainJaques22/catalyst-studio/issues" target="_blank">Open an issue on GitHub</a>.
+  <!-- Quick Tip -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Did You Know?</span>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#128161;</div>
+      <div class="tip-content">
+        <div class="tip-title">Access all your services from one place</div>
+        <div class="tip-text">
+          Studio runs everything locally. The BPMN Engine at <code>:8080</code>, Log Viewer at <code>:8082</code>, Database Browser at <code>:8081</code>, Container Manager at <code>:9443</code>, and the BPMN Modeler is built right into Studio. All accessible from the sidebar.
+        </div>
+      </div>
+    </div>
   </div>
 
-  <script>
-    // Read Studio version from ?v= query param
-    const params = new URLSearchParams(window.location.search);
-    const studioVersion = params.get('v');
+  <!-- Changelog -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">Changelog</span>
+    </div>
 
-    // Example: show upgrade banner if the user is on an older version
-    // Update LATEST_VERSION when you release a new version
-    const LATEST_VERSION = '0.0.0';
+    <div class="changelog-entry">
+      <div class="changelog-header">
+        <span class="changelog-version">v0.2.0</span>
+        <span class="changelog-date">Feb 12, 2026</span>
+        <span class="changelog-tag tag-latest">LATEST</span>
+      </div>
+      <ul class="changelog-items">
+        <li class="cl-feat">Built-in BPMN modeler with Miragon web modeler integration</li>
+        <li class="cl-feat">One-click deploy to Camunda directly from the browser</li>
+        <li class="cl-ui">Dark theme refinements across all panels</li>
+        <li class="cl-infra">Reduced Docker image size by 40%</li>
+        <li class="cl-infra">Faster container startup with health check improvements</li>
+      </ul>
+    </div>
 
-    if (studioVersion && studioVersion !== LATEST_VERSION && LATEST_VERSION !== '0.0.0') {
-      const banner = document.getElementById('version-banner');
-      const message = document.getElementById('version-message');
-      banner.style.display = 'block';
-      message.textContent = `You're running v${studioVersion}. Update to v${LATEST_VERSION} for the latest features and fixes.`;
-    }
-  </script>
+    <div class="changelog-entry" style="opacity: 0.65;">
+      <div class="changelog-header">
+        <span class="changelog-version">v0.1.0</span>
+        <span class="changelog-date">Jan 28, 2026</span>
+        <span class="changelog-tag tag-initial">INITIAL</span>
+      </div>
+      <ul class="changelog-items">
+        <li class="cl-feat">Docker Compose environment with Camunda 7, n8n, PostgreSQL</li>
+        <li class="cl-feat">Portainer and pgweb for container and database management</li>
+        <li class="cl-ui">Studio control panel with service dashboard</li>
+        <li class="cl-infra">Nginx reverse proxy with unified access</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Feedback -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-label">We're Listening</span>
+    </div>
+    <div class="feedback-card">
+      <p>Catalyst Studio is brand new. Your feedback shapes what we build next.</p>
+      <div class="feedback-buttons">
+        <a href="https://github.com/AlainJaques22/catalyst-studio/issues" target="_blank" class="fb-btn primary">Share Feedback</a>
+        <a href="https://github.com/AlainJaques22/catalyst-studio/issues/new" target="_blank" class="fb-btn">Report Issue</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Built with &#9829; by the Catalyst team</p>
+  </div>
+
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const studioVersion = params.get('v');
+
+  // ── Apply theme from query params ──
+  function hexToRgb(hex) {
+    hex = hex.replace('#', '');
+    return [
+      parseInt(hex.substring(0, 2), 16),
+      parseInt(hex.substring(2, 4), 16),
+      parseInt(hex.substring(4, 6), 16)
+    ];
+  }
+
+  const root = document.documentElement;
+  const primary = params.get('primary');
+  const primaryDark = params.get('primaryDark');
+  const primaryLight = params.get('primaryLight');
+
+  if (primary) {
+    const [r, g, b] = hexToRgb(primary);
+    root.style.setProperty('--primary', primary);
+    root.style.setProperty('--primary-dim', `rgba(${r},${g},${b},0.12)`);
+    root.style.setProperty('--primary-glow', `rgba(${r},${g},${b},0.06)`);
+  }
+  if (primaryDark) {
+    root.style.setProperty('--primary-dark', primaryDark);
+  }
+  if (primaryLight) {
+    root.style.setProperty('--primary-light', primaryLight);
+  }
+
+  // ── Version banner logic ──
+  const LATEST_VERSION = '0.2.0';
+
+  if (studioVersion && studioVersion !== LATEST_VERSION) {
+    const banner = document.getElementById('version-banner');
+    banner.className = 'version-banner update-available';
+    document.getElementById('version-emoji').textContent = '\uD83D\uDD04';
+    document.getElementById('banner-title').textContent = `Studio v${LATEST_VERSION} is available`;
+    document.getElementById('banner-sub').textContent = `You're running v${studioVersion} \u00B7 Built-in BPMN modeler + faster startup`;
+    document.getElementById('banner-btn').style.display = '';
+  } else if (studioVersion) {
+    document.getElementById('banner-sub').textContent = `Running Studio v${studioVersion} \u00B7 You have the latest`;
+  }
+</script>
+
 </body>
 </html>
