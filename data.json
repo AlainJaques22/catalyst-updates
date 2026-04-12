@@ -1,0 +1,89 @@
+{
+  "stack": [
+    {
+      "name": "BPMN Engine",
+      "version": "Camunda 7.24",
+      "icon": "&#9881;&#65039;",
+      "color": "var(--primary-dim)",
+      "description": "BPMN engine with REST API. Design processes in the built-in modeler and deploy with one click."
+    },
+    {
+      "name": "Connector Runtime",
+      "version": "22 connectors",
+      "icon": "&#9889;",
+      "color": "rgba(251, 146, 60, 0.12)",
+      "description": "Universal runtime with 22 connectors across 4 categories: AI, Communication, Productivity, and General."
+    },
+    {
+      "name": "BPMN Modeler",
+      "version": "Miragon",
+      "icon": "&#9999;&#65039;",
+      "color": "var(--purple-dim)",
+      "description": "Design BPMN processes in the browser and deploy to Camunda with one click. No desktop app needed."
+    },
+    {
+      "name": "Log Viewer",
+      "version": "Dozzle",
+      "icon": "&#128203;",
+      "color": "var(--blue-dim)",
+      "description": "Real-time Docker log viewer. Stream and filter logs from all containers in one place."
+    },
+    {
+      "name": "Database Browser",
+      "version": "pgweb",
+      "icon": "&#128024;",
+      "color": "var(--green-dim)",
+      "description": "Browse and query your PostgreSQL database directly in the browser. Inspect tables, run SQL, export data."
+    },
+    {
+      "name": "Container Manager",
+      "version": "Portainer",
+      "icon": "&#128051;",
+      "color": "rgba(251, 191, 36, 0.12)",
+      "description": "Monitor and manage your Docker containers. Restart services, view resource usage, check health."
+    }
+  ],
+  "tips": [
+    {
+      "icon": "&#128161;",
+      "title": "Access all your services from one place",
+      "text": "Studio runs everything locally. The BPMN Engine, Log Viewer, Database Browser, Container Manager, and the BPMN Modeler are all accessible from the sidebar."
+    },
+    {
+      "icon": "&#128272;",
+      "title": "Secret management built in",
+      "text": "Store API keys in environment variables, files, or properties — then reference them by name in your connector templates. No secrets in your BPMN files."
+    },
+    {
+      "icon": "&#128640;",
+      "title": "One-click deploy",
+      "text": "Design your BPMN process in the modeler, click Deploy, and it's running on your local engine. No CI pipeline, no build step, no waiting."
+    }
+  ],
+  "changelog": [
+    {
+      "version": "0.1.0",
+      "date": "2026-04-11",
+      "tag": "CURRENT",
+      "items": [
+        { "type": "feat", "text": "Universal connector runtime with 22 connectors across 4 categories" },
+        { "type": "feat", "text": "AI connectors: Anthropic, OpenAI, xAI Grok, Azure OpenAI, Google Gemini, DeepSeek, Groq, Mistral, Ollama, OpenAI-Compatible, Perplexity, Together AI, Fireworks AI" },
+        { "type": "feat", "text": "Communication connectors: SendGrid, Slack, Microsoft Teams" },
+        { "type": "feat", "text": "Productivity: Jira Suite (Create, Update, Comment, Transition)" },
+        { "type": "feat", "text": "General connectors: Generic REST, Webhook" },
+        { "type": "feat", "text": "Secret management with 4 backends (env, file, properties, variable)" },
+        { "type": "feat", "text": "Built-in BPMN modeler with one-click deploy" },
+        { "type": "infra", "text": "Docker Compose stack with multi-engine support (Camunda 7 + Operaton)" },
+        { "type": "ui", "text": "Studio control panel with service dashboard" },
+        { "type": "infra", "text": "Caddy reverse proxy with automatic service routing" }
+      ]
+    }
+  ],
+  "feedback": {
+    "text": "Catalyst Studio is brand new. Your feedback shapes what we build next.",
+    "buttons": [
+      { "text": "Send Feedback", "url": "mailto:hello@get-catalyst.dev?subject=Catalyst Studio Feedback", "primary": true },
+      { "text": "Report Issue", "url": "mailto:hello@get-catalyst.dev?subject=Catalyst Studio Issue", "primary": false }
+    ]
+  }
+}
