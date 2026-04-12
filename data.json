@@ -62,9 +62,42 @@
   ],
   "changelog": [
     {
+      "version": "0.2.0",
+      "date": "2026-04-12",
+      "tag": "CURRENT",
+      "items": [
+        { "type": "feat", "text": "Operaton: Run Camunda 7 and Operaton side-by-side with dynamic engine navigation and switching" },
+        { "type": "feat", "text": "Plugin architecture for connector runtime: Extensible connector framework for custom integrations" },
+        { "type": "feat", "text": "DMN support in web modeler with Save As and unsaved changes dialog" },
+        { "type": "feat", "text": "10 new AI connectors: Azure OpenAI, DeepSeek, Google Gemini, Groq, Mistral, Ollama, Perplexity, Together AI, Fireworks AI, OpenAI-Compatible" },
+        { "type": "feat", "text": "Jira connector suite: Create Issue, Update Issue, Add Comment, Transition Issue with lifecycle example BPMN" },
+        { "type": "feat", "text": "Microsoft Teams connector (Incoming Webhook)" },
+        { "type": "feat", "text": "SendGrid email connector" },
+        { "type": "feat", "text": "Slack native connector (via Slack API, not n8n bridge)" },
+        { "type": "feat", "text": "Generic REST connector (universal API connector)" },
+        { "type": "feat", "text": "Webhook connector (fire-and-forget outbound events)" },
+        { "type": "feat", "text": "File import in modeler with connector grouping and path hints" },
+        { "type": "feat", "text": "Resources page with FEEL reference links" },
+        { "type": "feat", "text": "Connector README rendering from markdown files in Studio UI" },
+        { "type": "infra", "text": "Upgraded Camunda from 7.21.0 to 7.24.0" },
+        { "type": "infra", "text": "Changed Camunda host port from 8080 to 8090 to avoid local conflicts" },
+        { "type": "infra", "text": "Standardised connector templates and secrets management across all connectors" },
+        { "type": "ui", "text": "Brand logos, test ribbons, and wider connector cards" },
+        { "type": "ui", "text": "Lucide React icons replacing custom icons" },
+        { "type": "ui", "text": "Simplified connector naming convention" },
+        { "type": "ui", "text": "Deployment names now use BPMN filename instead of timestamps" },
+        { "type": "fix", "text": "Parameterised hardcoded URLs in example BPMNs" },
+        { "type": "fix", "text": "PostgreSQL 'database admin does not exist' error on fresh starts" },
+        { "type": "fix", "text": "Jira suite navigation and rendering issues" },
+        { "type": "fix", "text": "bpmn-js box-sizing forced with !important to prevent CSS leaks" },
+        { "type": "fix", "text": "Connector card icons and tab labels for nested connector services" },
+        { "type": "fix", "text": "Missing imports in ConnectorReadmes after merge conflicts" }
+      ]
+    },
+    {
       "version": "0.1.0",
       "date": "2026-04-11",
-      "tag": "CURRENT",
+      "tag": "0.1.0",
       "items": [
         { "type": "feat", "text": "Universal connector runtime with 22 connectors across 4 categories" },
         { "type": "feat", "text": "AI connectors: Anthropic, OpenAI, xAI Grok, Azure OpenAI, Google Gemini, DeepSeek, Groq, Mistral, Ollama, OpenAI-Compatible, Perplexity, Together AI, Fireworks AI" },
