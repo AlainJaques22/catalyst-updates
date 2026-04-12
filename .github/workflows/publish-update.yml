@@ -1,0 +1,83 @@
+name: Publish Update
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'New version number (e.g. 0.2.0)'
+        required: true
+        type: string
+      changelog:
+        description: 'Changelog items, one per line. Format: type: description (types: feat, fix, ui, infra)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate inputs
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_CHANGELOG: ${{ inputs.changelog }}
+        run: |
+          if ! echo "$INPUT_VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::Version must be in semver format (e.g. 0.2.0)"
+            exit 1
+          fi
+          if [ -z "$INPUT_CHANGELOG" ]; then
+            echo "::error::Changelog cannot be empty"
+            exit 1
+          fi
+
+      - name: Update data.json
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_CHANGELOG: ${{ inputs.changelog }}
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+
+          # Build changelog items array from input lines
+          ITEMS="[]"
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            TYPE=$(echo "$line" | sed 's/^\s*//' | cut -d: -f1 | tr -d ' ')
+            TEXT=$(echo "$line" | sed 's/^\s*//' | cut -d: -f2- | sed 's/^\s*//')
+            ITEMS=$(echo "$ITEMS" | jq --arg t "$TYPE" --arg x "$TEXT" '. + [{"type": $t, "text": $x}]')
+          done <<< "$INPUT_CHANGELOG"
+
+          # Build the new changelog entry
+          NEW_ENTRY=$(jq -n \
+            --arg v "$INPUT_VERSION" \
+            --arg d "$DATE" \
+            --argjson items "$ITEMS" \
+            '{"version": $v, "date": $d, "tag": "CURRENT", "items": $items}')
+
+          # Demote the current CURRENT entry and prepend new one
+          jq --argjson entry "$NEW_ENTRY" '
+            .changelog = (.changelog | map(if .tag == "CURRENT" then .tag = .version else . end)) |
+            .changelog = [$entry] + .changelog
+          ' data.json > data.tmp && mv data.tmp data.json
+
+      - name: Update version.json
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          jq --arg v "$INPUT_VERSION" --arg t "$TIMESTAMP" \
+            '.version = $v | .lastModified = $t' version.json > version.tmp && mv version.tmp version.json
+
+      - name: Commit and push
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json version.json
+          git commit -m "release: v${INPUT_VERSION}"
+          git push

@@ -101,8 +101,24 @@
     border-color: rgba(80, 250, 123, 0.2);
   }
   .version-banner.update-available {
-    background: var(--primary-dim);
-    border-color: var(--primary-dim);
+    background: linear-gradient(145deg, rgba(251, 191, 36, 0.12), rgba(251, 191, 36, 0.05));
+    border-color: rgba(251, 191, 36, 0.15);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.3),
+      0 1px 3px rgba(0, 0, 0, 0.2),
+      0 0 24px rgba(251, 191, 36, 0.12),
+      inset 0 1px 0 rgba(251, 191, 36, 0.1);
+    animation: fadeSlideIn 0.4s ease-out 0.05s both, glowPulse 3s ease-in-out infinite 0.5s;
+    position: relative;
+    overflow: hidden;
+  }
+  .version-banner.update-available::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.08), transparent);
+    animation: shimmer 4s ease-in-out infinite 1s;
   }
   .version-icon {
     width: 36px; height: 36px;
@@ -111,17 +127,49 @@
     font-size: 18px; flex-shrink: 0;
   }
   .up-to-date .version-icon { background: rgba(80, 250, 123, 0.15); }
-  .update-available .version-icon { background: var(--primary-dim); }
+  .update-available .version-icon {
+    background: rgba(251, 191, 36, 0.2);
+    animation: iconBounce 2s ease-in-out infinite 1s;
+  }
+  .update-available .version-text strong {
+    color: #fbbf24;
+    font-size: 17px;
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+  }
   .version-text { flex: 1; }
   .version-text strong { font-weight: 600; font-size: 14px; }
   .version-text .sub { font-size: 12.5px; color: var(--text-muted); margin-top: 1px; }
-  .version-btn {
-    padding: 7px 16px; border-radius: 6px; border: none;
-    font-family: inherit; font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: all 0.15s; text-decoration: none;
-    color: var(--bg); background: var(--primary);
+  /* ── Update Instructions ── */
+  .update-instructions {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: -18px;
+    margin-bottom: 28px;
+    animation: fadeSlideIn 0.4s ease-out 0.15s both;
   }
-  .version-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .update-step {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .update-cmd {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    color: var(--primary);
+    user-select: all;
+  }
+  .update-note {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
 
   /* ── Sections ── */
   .section {
@@ -215,8 +263,8 @@
     font-size: 10px; font-weight: 600; padding: 2px 7px;
     border-radius: 4px; margin-left: auto;
   }
-  .tag-latest { background: var(--green-dim); color: var(--green); }
-  .tag-initial { background: var(--primary-dim); color: var(--primary); }
+  .tag-current { background: var(--green-dim); color: var(--green); }
+  .tag-previous { background: var(--primary-dim); color: var(--primary); }
   .changelog-items { list-style: none; padding: 0; }
   .changelog-items li {
     font-size: 13px; color: var(--text-muted); padding: 3px 0;
@@ -227,6 +275,7 @@
     flex-shrink: 0; margin-top: 7px;
   }
   .cl-feat::before { background: var(--green); }
+  .cl-fix::before { background: var(--red); }
   .cl-infra::before { background: var(--blue); }
   .cl-ui::before { background: var(--purple); }
 
@@ -272,12 +321,52 @@
     color: var(--text-dim);
   }
 
+  /* ── Loading ── */
+  .loading {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+  .loading-dot {
+    display: inline-block;
+    animation: pulse 1.4s infinite ease-in-out;
+  }
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse {
+    0%, 80%, 100% { opacity: 0.3; }
+    40% { opacity: 1; }
+  }
+
+  /* ── Error ── */
+  .error-card {
+    background: rgba(255, 85, 85, 0.08);
+    border: 1px solid rgba(255, 85, 85, 0.2);
+    border-radius: 10px;
+    padding: 20px; text-align: center;
+    color: var(--text-muted); font-size: 13px;
+  }
+
   @keyframes fadeIn {
     from { opacity: 0; } to { opacity: 1; }
   }
   @keyframes fadeSlideIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2), 0 0 24px rgba(251,191,36,0.12), inset 0 1px 0 rgba(251,191,36,0.1); }
+    50% { box-shadow: 0 6px 24px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.2), 0 0 32px rgba(251,191,36,0.18), inset 0 1px 0 rgba(251,191,36,0.15); }
+  }
+  @keyframes shimmer {
+    0%, 100% { left: -100%; }
+    50% { left: 150%; }
+  }
+  @keyframes iconBounce {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.2); }
+    30% { transform: scale(1); }
   }
 
   @media (max-width: 600px) {
@@ -292,9 +381,9 @@
 
   <!-- Welcome -->
   <div class="welcome">
-    <div class="welcome-eyebrow">Catalyst Studio</div>
-    <h1>Your local Camunda development environment</h1>
-    <p>Everything you need to design, deploy, and debug BPMN processes — running entirely on your machine.</p>
+    <div class="welcome-eyebrow">What's New</div>
+    <h1>Catalyst Studio Updates</h1>
+    <p>Release notes, changelog, and tips for your Catalyst Studio installation.</p>
   </div>
 
   <!-- Version Banner -->
@@ -304,123 +393,20 @@
       <strong id="banner-title">You're up to date</strong>
       <div class="sub" id="banner-sub">Running the latest version</div>
     </div>
-    <a href="https://github.com/AlainJaques22/catalyst-studio/releases" target="_blank" class="version-btn" id="banner-btn" style="display: none;">View Release</a>
+  </div>
+  <div class="update-instructions" id="update-instructions" style="display: none;">
+    <div class="update-step">To update, open a terminal in your Catalyst Studio folder and run:</div>
+    <code class="update-cmd">docker compose pull && docker compose up -d</code>
+    <div class="update-note">This downloads the latest version and restarts your services. Your BPMN files, deployed processes, and database are all preserved.</div>
   </div>
 
-  <!-- Your Stack -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-label">Your Stack</span>
-    </div>
-    <div class="stack-grid">
-      <div class="stack-card">
-        <div class="stack-top">
-          <div class="stack-icon" style="background: var(--primary-dim);">&#9881;&#65039;</div>
-          <span class="stack-name">BPMN Engine</span>
-          <span class="stack-version">Camunda 7</span>
-        </div>
-        <div class="stack-desc">BPMN engine with REST API. Design processes in the built-in modeler and deploy with one click.</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-top">
-          <div class="stack-icon" style="background: var(--blue-dim);">&#128203;</div>
-          <span class="stack-name">Log Viewer</span>
-          <span class="stack-version">Dozzle</span>
-        </div>
-        <div class="stack-desc">Real-time Docker log viewer. Stream and filter logs from all containers in one place.</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-top">
-          <div class="stack-icon" style="background: var(--green-dim);">&#128024;</div>
-          <span class="stack-name">Database Browser</span>
-          <span class="stack-version">pgweb</span>
-        </div>
-        <div class="stack-desc">Browse and query your database directly in the browser. Inspect tables, run SQL, export data.</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-top">
-          <div class="stack-icon" style="background: var(--purple-dim);">&#9999;&#65039;</div>
-          <span class="stack-name">BPMN Modeler</span>
-          <span class="stack-version">Miragon</span>
-        </div>
-        <div class="stack-desc">Design BPMN processes in the browser and deploy to Camunda with one click. No desktop app needed.</div>
-      </div>
-      <div class="stack-card">
-        <div class="stack-top">
-          <div class="stack-icon" style="background: rgba(251, 191, 36, 0.12);">&#128051;</div>
-          <span class="stack-name">Container Manager</span>
-          <span class="stack-version">Portainer</span>
-        </div>
-        <div class="stack-desc">Monitor and manage your Docker containers. Restart services, view resource usage, check health.</div>
-      </div>
-    </div>
+  <!-- Dynamic content containers -->
+  <div id="tip-container"></div>
+  <div id="changelog-container">
+    <div class="loading"><span class="loading-dot">.</span><span class="loading-dot">.</span><span class="loading-dot">.</span></div>
   </div>
-
-  <!-- Quick Tip -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-label">Did You Know?</span>
-    </div>
-    <div class="tip-card">
-      <div class="tip-icon">&#128161;</div>
-      <div class="tip-content">
-        <div class="tip-title">Access all your services from one place</div>
-        <div class="tip-text">
-          Studio runs everything locally. The BPMN Engine at <code>:8080</code>, Log Viewer at <code>:8082</code>, Database Browser at <code>:8081</code>, Container Manager at <code>:9443</code>, and the BPMN Modeler is built right into Studio. All accessible from the sidebar.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Changelog -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-label">Changelog</span>
-    </div>
-
-    <div class="changelog-entry">
-      <div class="changelog-header">
-        <span class="changelog-version">v0.2.0</span>
-        <span class="changelog-date">Feb 12, 2026</span>
-        <span class="changelog-tag tag-latest">LATEST</span>
-      </div>
-      <ul class="changelog-items">
-        <li class="cl-feat">Built-in BPMN modeler with Miragon web modeler integration</li>
-        <li class="cl-feat">One-click deploy to Camunda directly from the browser</li>
-        <li class="cl-ui">Dark theme refinements across all panels</li>
-        <li class="cl-infra">Reduced Docker image size by 40%</li>
-        <li class="cl-infra">Faster container startup with health check improvements</li>
-      </ul>
-    </div>
-
-    <div class="changelog-entry" style="opacity: 0.65;">
-      <div class="changelog-header">
-        <span class="changelog-version">v0.1.0</span>
-        <span class="changelog-date">Jan 28, 2026</span>
-        <span class="changelog-tag tag-initial">INITIAL</span>
-      </div>
-      <ul class="changelog-items">
-        <li class="cl-feat">Docker Compose environment with Camunda 7, n8n, PostgreSQL</li>
-        <li class="cl-feat">Portainer and pgweb for container and database management</li>
-        <li class="cl-ui">Studio control panel with service dashboard</li>
-        <li class="cl-infra">Nginx reverse proxy with unified access</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Feedback -->
-  <div class="section">
-    <div class="section-header">
-      <span class="section-label">We're Listening</span>
-    </div>
-    <div class="feedback-card">
-      <p>Catalyst Studio is brand new. Your feedback shapes what we build next.</p>
-      <div class="feedback-buttons">
-        <a href="https://github.com/AlainJaques22/catalyst-studio/issues" target="_blank" class="fb-btn primary">Share Feedback</a>
-        <a href="https://github.com/AlainJaques22/catalyst-studio/issues/new" target="_blank" class="fb-btn">Report Issue</a>
-      </div>
-    </div>
-  </div>
+  <div id="stack-container"></div>
+  <div id="feedback-container"></div>
 
   <!-- Footer -->
   <div class="footer">
@@ -430,22 +416,168 @@
 </div>
 
 <script>
-  const params = new URLSearchParams(window.location.search);
-  const studioVersion = params.get('v');
+  // ── Helpers ──
 
-  // ── Version banner logic ──
-  const LATEST_VERSION = '0.2.0';
-
-  if (studioVersion && studioVersion !== LATEST_VERSION) {
-    const banner = document.getElementById('version-banner');
-    banner.className = 'version-banner update-available';
-    document.getElementById('version-emoji').textContent = '\uD83D\uDD04';
-    document.getElementById('banner-title').textContent = `Studio v${LATEST_VERSION} is available`;
-    document.getElementById('banner-sub').textContent = `You're running v${studioVersion} \u00B7 Built-in BPMN modeler + faster startup`;
-    document.getElementById('banner-btn').style.display = '';
-  } else if (studioVersion) {
-    document.getElementById('banner-sub').textContent = `Running Studio v${studioVersion} \u00B7 You have the latest`;
+  function compareVersions(a, b) {
+    var pa = a.split('.').map(Number);
+    var pb = b.split('.').map(Number);
+    for (var i = 0; i < 3; i++) {
+      var na = pa[i] || 0;
+      var nb = pb[i] || 0;
+      if (na > nb) return 1;
+      if (na < nb) return -1;
+    }
+    return 0;
   }
+
+  function formatDate(dateStr) {
+    var d = new Date(dateStr + 'T00:00:00');
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ── Renderers ──
+
+  function renderStack(stack) {
+    var html = '<div class="section">' +
+      '<div class="section-header"><span class="section-label">Your Stack</span></div>' +
+      '<div class="stack-grid">';
+    stack.forEach(function(s) {
+      html += '<div class="stack-card">' +
+        '<div class="stack-top">' +
+          '<div class="stack-icon" style="background: ' + s.color + ';">' + s.icon + '</div>' +
+          '<span class="stack-name">' + escapeHtml(s.name) + '</span>' +
+          '<span class="stack-version">' + escapeHtml(s.version) + '</span>' +
+        '</div>' +
+        '<div class="stack-desc">' + escapeHtml(s.description) + '</div>' +
+      '</div>';
+    });
+    html += '</div></div>';
+    return html;
+  }
+
+  function renderTip(tips) {
+    var tip = tips[Math.floor(Math.random() * tips.length)];
+    return '<div class="section">' +
+      '<div class="section-header"><span class="section-label">Did You Know?</span></div>' +
+      '<div class="tip-card">' +
+        '<div class="tip-icon">' + tip.icon + '</div>' +
+        '<div class="tip-content">' +
+          '<div class="tip-title">' + escapeHtml(tip.title) + '</div>' +
+          '<div class="tip-text">' + escapeHtml(tip.text) + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderChangelog(changelog) {
+    var html = '<div class="section">' +
+      '<div class="section-header"><span class="section-label">Changelog</span></div>';
+    changelog.forEach(function(entry, idx) {
+      var tagClass = idx === 0 ? 'tag-current' : 'tag-previous';
+      var tagLabel = idx === 0 ? 'CURRENT' : 'v' + entry.version;
+      var style = idx > 0 ? ' style="opacity: 0.65;"' : '';
+      html += '<div class="changelog-entry"' + style + '>' +
+        '<div class="changelog-header">' +
+          '<span class="changelog-version">v' + escapeHtml(entry.version) + '</span>' +
+          '<span class="changelog-date">' + formatDate(entry.date) + '</span>' +
+          '<span class="changelog-tag ' + tagClass + '">' + tagLabel + '</span>' +
+        '</div>' +
+        '<ul class="changelog-items">';
+      entry.items.forEach(function(item) {
+        html += '<li class="cl-' + escapeHtml(item.type) + '">' + escapeHtml(item.text) + '</li>';
+      });
+      html += '</ul></div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  function renderFeedback(feedback) {
+    var html = '<div class="section">' +
+      '<div class="section-header"><span class="section-label">We\'re Listening</span></div>' +
+      '<div class="feedback-card">' +
+        '<p>' + escapeHtml(feedback.text) + '</p>' +
+        '<div class="feedback-buttons">';
+    feedback.buttons.forEach(function(btn) {
+      var cls = btn.primary ? 'fb-btn primary' : 'fb-btn';
+      html += '<a href="' + escapeHtml(btn.url) + '" target="_blank" class="' + cls + '">' + escapeHtml(btn.text) + '</a>';
+    });
+    html += '</div></div></div>';
+    return html;
+  }
+
+  function showError(containerId, message) {
+    document.getElementById(containerId).innerHTML =
+      '<div class="error-card">' + escapeHtml(message) + '</div>';
+  }
+
+  // ── Version banner ──
+
+  function updateVersionBanner(latestVersion, changelog) {
+    var params = new URLSearchParams(window.location.search);
+    var studioVersion = params.get('v');
+    if (!studioVersion) return;
+
+    if (compareVersions(studioVersion, latestVersion) < 0) {
+      var banner = document.getElementById('version-banner');
+      banner.className = 'version-banner update-available';
+      document.getElementById('version-emoji').textContent = '\u2728';
+      document.getElementById('banner-title').textContent = 'Studio v' + latestVersion + ' is available';
+      // Summarize what's new from the latest changelog entry
+      var sub = 'You\'re on v' + studioVersion + ' \u00B7 v' + latestVersion + ' brings ';
+      if (changelog && changelog.length > 0) {
+        var items = changelog[0].items;
+        var feats = items.filter(function(i) { return i.type === 'feat'; });
+        var total = items.length;
+        if (feats.length > 0) {
+          sub += feats.length + ' new feature' + (feats.length > 1 ? 's' : '');
+          if (total > feats.length) sub += ' and ' + (total - feats.length) + ' improvement' + ((total - feats.length) > 1 ? 's' : '');
+        } else {
+          sub += total + ' update' + (total > 1 ? 's' : '');
+        }
+      }
+      document.getElementById('banner-sub').textContent = sub;
+      document.getElementById('update-instructions').style.display = '';
+    } else {
+      document.getElementById('banner-sub').textContent = 'Running Studio v' + studioVersion + ' \u00B7 You have the latest';
+    }
+  }
+
+  // ── Init ──
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var dataReady = fetch('data.json').then(function(r) {
+      if (!r.ok) throw new Error('Failed to load data');
+      return r.json();
+    });
+    var versionReady = fetch('version.json').then(function(r) {
+      if (!r.ok) throw new Error('Failed to load version');
+      return r.json();
+    });
+
+    Promise.all([dataReady, versionReady]).then(function(results) {
+      var data = results[0];
+      var version = results[1];
+
+      document.getElementById('tip-container').innerHTML = renderTip(data.tips);
+      document.getElementById('changelog-container').innerHTML = renderChangelog(data.changelog);
+      document.getElementById('stack-container').innerHTML = renderStack(data.stack);
+      document.getElementById('feedback-container').innerHTML = renderFeedback(data.feedback);
+
+      updateVersionBanner(version.version, data.changelog);
+    }).catch(function(err) {
+      console.error('Failed to load updates page data:', err);
+      document.getElementById('stack-container').innerHTML = '';
+      showError('tip-container', 'Unable to load page data. Please try refreshing.');
+    });
+  });
 </script>
 
 </body>
