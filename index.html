@@ -29,6 +29,29 @@
     --purple-dim: rgba(167, 139, 250, 0.12);
   }
 
+  [data-mode="light"] {
+    --bg: #f5f3ee;
+    --surface: #eceae4;
+    --surface-hover: #dddad2;
+    --surface-raised: #e4e1d9;
+    --border: #d0cdc6;
+    --text: #1a1916;
+    --text-muted: #7a7772;
+    --text-dim: #c8c5bf;
+    --primary: #06b6d4;
+    --primary-dark: #0891b2;
+    --primary-light: #22d3ee;
+    --primary-dim: rgba(6, 182, 212, 0.12);
+    --primary-glow: rgba(6, 182, 212, 0.06);
+    --green: #16a34a;
+    --green-dim: rgba(22, 163, 74, 0.12);
+    --blue: #2563eb;
+    --blue-dim: rgba(37, 99, 235, 0.12);
+    --red: #dc2626;
+    --purple: #7c3aed;
+    --purple-dim: rgba(124, 58, 237, 0.12);
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
@@ -152,10 +175,16 @@
   .update-step {
     font-size: 13px;
     color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .update-cmd-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 8px;
   }
   .update-cmd {
-    display: block;
+    flex: 1;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     background: var(--bg);
@@ -165,10 +194,24 @@
     color: var(--primary);
     user-select: all;
   }
+  .copy-btn {
+    flex-shrink: 0;
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    line-height: 1;
+  }
+  .copy-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); }
+  .copy-btn.copied { border-color: var(--green); color: var(--green); background: var(--green-dim); }
   .update-note {
     font-size: 12px;
     color: var(--text-dim);
-    margin-top: 8px;
+    margin-top: 4px;
   }
 
   /* ── Sections ── */
@@ -396,8 +439,15 @@
   </div>
   <div class="update-instructions" id="update-instructions" style="display: none;">
     <div class="update-step">To update, open a terminal in your Catalyst Studio folder and run:</div>
-    <code class="update-cmd">docker compose pull && docker compose up -d</code>
-    <div class="update-note">This downloads the latest version and restarts your services. Your BPMN files, deployed processes, and database are all preserved.</div>
+    <div class="update-cmd-row">
+      <code class="update-cmd">docker compose pull</code>
+      <button class="copy-btn" onclick="copyCmd(this, 'docker compose pull')">Copy</button>
+    </div>
+    <div class="update-cmd-row">
+      <code class="update-cmd">docker compose up -d</code>
+      <button class="copy-btn" onclick="copyCmd(this, 'docker compose up -d')">Copy</button>
+    </div>
+    <div class="update-note">This downloads the latest images and restarts your services. Your BPMN files, deployed processes, and database are all preserved.</div>
   </div>
 
   <!-- Dynamic content containers -->
@@ -416,6 +466,26 @@
 </div>
 
 <script>
+  // ── Mode (light/dark) ──
+  (function() {
+    var mode = new URLSearchParams(window.location.search).get('mode');
+    if (mode === 'light' || mode === 'dark') {
+      document.documentElement.setAttribute('data-mode', mode);
+    }
+  })();
+
+  // ── Copy button ──
+  function copyCmd(btn, text) {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
   // ── Helpers ──
 
   function compareVersions(a, b) {
