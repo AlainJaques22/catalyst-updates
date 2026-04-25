@@ -313,14 +313,16 @@
     font-size: 13px; color: var(--text-muted); padding: 3px 0;
     display: flex; align-items: flex-start; gap: 8px;
   }
-  .changelog-items li::before {
-    content: ''; width: 5px; height: 5px; border-radius: 50%;
-    flex-shrink: 0; margin-top: 7px;
+  .cl-badge {
+    font-size: 10px; font-weight: 600;
+    padding: 2px 6px; border-radius: 4px;
+    flex-shrink: 0; text-transform: uppercase;
+    letter-spacing: 0.4px; margin-top: 1px;
   }
-  .cl-feat::before { background: var(--green); }
-  .cl-fix::before { background: var(--red); }
-  .cl-infra::before { background: var(--blue); }
-  .cl-ui::before { background: var(--purple); }
+  .cl-feat .cl-badge  { background: var(--green-dim);  color: var(--green);  }
+  .cl-fix .cl-badge   { background: rgba(255, 85, 85, 0.12); color: var(--red); }
+  .cl-infra .cl-badge { background: var(--blue-dim);   color: var(--blue);   }
+  .cl-ui .cl-badge    { background: var(--purple-dim); color: var(--purple); }
 
   /* ── Feedback ── */
   .feedback-card {
@@ -561,7 +563,10 @@
         '</div>' +
         '<ul class="changelog-items">';
       entry.items.forEach(function(item) {
-        html += '<li class="cl-' + escapeHtml(item.type) + '">' + escapeHtml(item.text) + '</li>';
+        html += '<li class="cl-' + escapeHtml(item.type) + '">' +
+          '<span class="cl-badge">' + escapeHtml(item.type) + '</span>' +
+          escapeHtml(item.text) +
+        '</li>';
       });
       html += '</ul></div>';
     });
