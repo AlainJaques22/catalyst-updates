@@ -62,9 +62,37 @@
   ],
   "changelog": [
     {
-      "version": "0.2.0",
-      "date": "2026-04-12",
+      "version": "0.3.0",
+      "date": "2026-04-25",
       "tag": "CURRENT",
+      "items": [
+        { "type": "feat", "text": "Light/dark mode toggle with theme selector" },
+        { "type": "feat", "text": "Operaton support — run Camunda 7 and Operaton side-by-side with engine switching" },
+        { "type": "feat", "text": "Plugin architecture for connector runtime" },
+        { "type": "feat", "text": "DMN support in web modeler with Save As and unsaved changes dialog" },
+        { "type": "feat", "text": "10 new AI connectors: Azure OpenAI, DeepSeek, Gemini, Groq, Mistral, Ollama, Perplexity, Together AI, Fireworks AI, OpenAI-Compatible" },
+        { "type": "feat", "text": "Jira connector suite — Create, Update, Comment, Transition with example BPMN" },
+        { "type": "feat", "text": "Microsoft Teams connector (Incoming Webhook)" },
+        { "type": "feat", "text": "Generic REST connector" },
+        { "type": "feat", "text": "Webhook connector for outbound events" },
+        { "type": "feat", "text": "File import in modeler with connector grouping and path hints" },
+        { "type": "feat", "text": "Resources page with FEEL reference links" },
+        { "type": "feat", "text": "Connector README rendering in Studio UI" },
+        { "type": "infra", "text": "Upgraded Camunda from 7.21.0 to 7.24.0" },
+        { "type": "infra", "text": "Changed Camunda host port to 8090 to avoid local conflicts" },
+        { "type": "ui", "text": "Lucide React icons replacing custom icons" },
+        { "type": "ui", "text": "Brand logos and wider connector cards" },
+        { "type": "ui", "text": "Simplified connector naming convention" },
+        { "type": "fix", "text": "Operaton iframe embedding (CSP headers)" },
+        { "type": "fix", "text": "PostgreSQL init error on fresh installs" },
+        { "type": "fix", "text": "Parameterised hardcoded URLs in example BPMNs" },
+        { "type": "fix", "text": "Jira suite navigation and rendering" }
+      ]
+    },
+    {
+      "version": "0.1.0",
+      "date": "2026-04-11",
+      "tag": "0.1.0",
       "items": [
         { "type": "feat", "text": "Operaton: Run Camunda 7 and Operaton side-by-side with dynamic engine navigation and switching" },
         { "type": "feat", "text": "Plugin architecture for connector runtime: Extensible connector framework for custom integrations" },
