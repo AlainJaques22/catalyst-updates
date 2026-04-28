@@ -62,11 +62,25 @@
   ],
   "changelog": [
     {
+      "version": "0.7.1",
+      "date": "2026-04-28",
+      "tag": "CURRENT",
+      "items": [
+        {
+          "type": "fix",
+          "text": "BPMN save permission error on Windows (Rancher Desktop) infra: Version bump now detects patch vs minor from commit types infra: Release checklist issue opened automatically after each merge"
+        }
+      ]
+    },
+    {
       "version": "0.7.0",
       "date": "2026-04-27",
       "tag": "0.7.0",
       "items": [
-        { "type": "feat", "text": "Connector runtime settings now configurable via Docker Compose environment variables" }
+        {
+          "type": "feat",
+          "text": "Connector runtime settings now configurable via Docker Compose environment variables"
+        }
       ]
     },
     {
@@ -74,9 +88,18 @@
       "date": "2026-04-25",
       "tag": "0.6.0",
       "items": [
-        { "type": "fix", "text": "Version number now displays correctly on the Studio home page" },
-        { "type": "fix", "text": "Updates page copy buttons work correctly in all browsers" },
-        { "type": "fix", "text": "Updates page theme follows Studio light/dark mode in real time" }
+        {
+          "type": "fix",
+          "text": "Version number now displays correctly on the Studio home page"
+        },
+        {
+          "type": "fix",
+          "text": "Updates page copy buttons work correctly in all browsers"
+        },
+        {
+          "type": "fix",
+          "text": "Updates page theme follows Studio light/dark mode in real time"
+        }
       ]
     },
     {
@@ -84,19 +107,37 @@
       "date": "2026-04-25",
       "tag": "0.5.0",
       "items": [
-        { "type": "infra", "text": "Reduced log noise in web modeler container" }
+        {
+          "type": "infra",
+          "text": "Reduced log noise in web modeler container"
+        }
       ]
     },
     {
       "version": "0.4.0",
       "date": "2026-04-25",
-      "tag": "CURRENT",
+      "tag": "0.4.0",
       "items": [
-        { "type": "feat", "text": "Light/dark mode toggle with theme selector" },
-        { "type": "feat", "text": "Updates page matches Studio light/dark theme automatically" },
-        { "type": "ui", "text": "Update commands split into separate steps with copy buttons" },
-        { "type": "infra", "text": "Automated minor version bump on every merge to main" },
-        { "type": "infra", "text": "Docker images now tagged with version number in addition to :latest" }
+        {
+          "type": "feat",
+          "text": "Light/dark mode toggle with theme selector"
+        },
+        {
+          "type": "feat",
+          "text": "Updates page matches Studio light/dark theme automatically"
+        },
+        {
+          "type": "ui",
+          "text": "Update commands split into separate steps with copy buttons"
+        },
+        {
+          "type": "infra",
+          "text": "Automated minor version bump on every merge to main"
+        },
+        {
+          "type": "infra",
+          "text": "Docker images now tagged with version number in addition to :latest"
+        }
       ]
     },
     {
@@ -104,28 +145,94 @@
       "date": "2026-04-12",
       "tag": "0.3.0",
       "items": [
-        { "type": "feat", "text": "Operaton support — run Camunda 7 and Operaton side-by-side with engine switching" },
-        { "type": "feat", "text": "Plugin architecture for connector runtime" },
-        { "type": "feat", "text": "DMN support in web modeler with Save As and unsaved changes dialog" },
-        { "type": "feat", "text": "10 new AI connectors: Azure OpenAI, DeepSeek, Gemini, Groq, Mistral, Ollama, Perplexity, Together AI, Fireworks AI, OpenAI-Compatible" },
-        { "type": "feat", "text": "Jira connector suite — Create, Update, Comment, Transition with example BPMN" },
-        { "type": "feat", "text": "Microsoft Teams connector (Incoming Webhook)" },
-        { "type": "feat", "text": "SendGrid email connector" },
-        { "type": "feat", "text": "Slack native connector" },
-        { "type": "feat", "text": "Generic REST connector" },
-        { "type": "feat", "text": "Webhook connector for outbound events" },
-        { "type": "feat", "text": "File import in modeler with connector grouping and path hints" },
-        { "type": "feat", "text": "Resources page with FEEL reference links" },
-        { "type": "feat", "text": "Connector README rendering in Studio UI" },
-        { "type": "infra", "text": "Upgraded Camunda from 7.21.0 to 7.24.0" },
-        { "type": "infra", "text": "Changed Camunda host port to 8090 to avoid local conflicts" },
-        { "type": "ui", "text": "Lucide React icons replacing custom icons" },
-        { "type": "ui", "text": "Brand logos and wider connector cards" },
-        { "type": "ui", "text": "Simplified connector naming convention" },
-        { "type": "fix", "text": "Operaton iframe embedding (CSP headers)" },
-        { "type": "fix", "text": "PostgreSQL init error on fresh installs" },
-        { "type": "fix", "text": "Parameterised hardcoded URLs in example BPMNs" },
-        { "type": "fix", "text": "Jira suite navigation and rendering" }
+        {
+          "type": "feat",
+          "text": "Operaton support — run Camunda 7 and Operaton side-by-side with engine switching"
+        },
+        {
+          "type": "feat",
+          "text": "Plugin architecture for connector runtime"
+        },
+        {
+          "type": "feat",
+          "text": "DMN support in web modeler with Save As and unsaved changes dialog"
+        },
+        {
+          "type": "feat",
+          "text": "10 new AI connectors: Azure OpenAI, DeepSeek, Gemini, Groq, Mistral, Ollama, Perplexity, Together AI, Fireworks AI, OpenAI-Compatible"
+        },
+        {
+          "type": "feat",
+          "text": "Jira connector suite — Create, Update, Comment, Transition with example BPMN"
+        },
+        {
+          "type": "feat",
+          "text": "Microsoft Teams connector (Incoming Webhook)"
+        },
+        {
+          "type": "feat",
+          "text": "SendGrid email connector"
+        },
+        {
+          "type": "feat",
+          "text": "Slack native connector"
+        },
+        {
+          "type": "feat",
+          "text": "Generic REST connector"
+        },
+        {
+          "type": "feat",
+          "text": "Webhook connector for outbound events"
+        },
+        {
+          "type": "feat",
+          "text": "File import in modeler with connector grouping and path hints"
+        },
+        {
+          "type": "feat",
+          "text": "Resources page with FEEL reference links"
+        },
+        {
+          "type": "feat",
+          "text": "Connector README rendering in Studio UI"
+        },
+        {
+          "type": "infra",
+          "text": "Upgraded Camunda from 7.21.0 to 7.24.0"
+        },
+        {
+          "type": "infra",
+          "text": "Changed Camunda host port to 8090 to avoid local conflicts"
+        },
+        {
+          "type": "ui",
+          "text": "Lucide React icons replacing custom icons"
+        },
+        {
+          "type": "ui",
+          "text": "Brand logos and wider connector cards"
+        },
+        {
+          "type": "ui",
+          "text": "Simplified connector naming convention"
+        },
+        {
+          "type": "fix",
+          "text": "Operaton iframe embedding (CSP headers)"
+        },
+        {
+          "type": "fix",
+          "text": "PostgreSQL init error on fresh installs"
+        },
+        {
+          "type": "fix",
+          "text": "Parameterised hardcoded URLs in example BPMNs"
+        },
+        {
+          "type": "fix",
+          "text": "Jira suite navigation and rendering"
+        }
       ]
     },
     {
@@ -133,19 +240,42 @@
       "date": "2026-04-11",
       "tag": "0.1.0",
       "items": [
-        { "type": "feat", "text": "Universal connector runtime with secret management (env, file, properties, variable)" },
-        { "type": "feat", "text": "AI connectors: Anthropic, OpenAI, xAI Grok" },
-        { "type": "feat", "text": "Built-in BPMN modeler with one-click deploy to Camunda" },
-        { "type": "infra", "text": "Docker Compose stack: Camunda 7, n8n, PostgreSQL, Caddy reverse proxy" },
-        { "type": "ui", "text": "Studio control panel with service dashboard" }
+        {
+          "type": "feat",
+          "text": "Universal connector runtime with secret management (env, file, properties, variable)"
+        },
+        {
+          "type": "feat",
+          "text": "AI connectors: Anthropic, OpenAI, xAI Grok"
+        },
+        {
+          "type": "feat",
+          "text": "Built-in BPMN modeler with one-click deploy to Camunda"
+        },
+        {
+          "type": "infra",
+          "text": "Docker Compose stack: Camunda 7, n8n, PostgreSQL, Caddy reverse proxy"
+        },
+        {
+          "type": "ui",
+          "text": "Studio control panel with service dashboard"
+        }
       ]
     }
   ],
   "feedback": {
     "text": "Catalyst Studio is brand new. Your feedback shapes what we build next.",
     "buttons": [
-      { "text": "Send Feedback", "url": "mailto:hello@get-catalyst.dev?subject=Catalyst Studio Feedback", "primary": true },
-      { "text": "Report Issue", "url": "mailto:hello@get-catalyst.dev?subject=Catalyst Studio Issue", "primary": false }
+      {
+        "text": "Send Feedback",
+        "url": "mailto:hello@get-catalyst.dev?subject=Catalyst Studio Feedback",
+        "primary": true
+      },
+      {
+        "text": "Report Issue",
+        "url": "mailto:hello@get-catalyst.dev?subject=Catalyst Studio Issue",
+        "primary": false
+      }
     ]
   }
 }
