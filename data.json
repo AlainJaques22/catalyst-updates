@@ -62,6 +62,32 @@
   ],
   "changelog": [
     {
+      "version": "0.7.0",
+      "date": "2026-04-27",
+      "tag": "0.7.0",
+      "items": [
+        { "type": "feat", "text": "Connector runtime settings now configurable via Docker Compose environment variables" }
+      ]
+    },
+    {
+      "version": "0.6.0",
+      "date": "2026-04-25",
+      "tag": "0.6.0",
+      "items": [
+        { "type": "fix", "text": "Version number now displays correctly on the Studio home page" },
+        { "type": "fix", "text": "Updates page copy buttons work correctly in all browsers" },
+        { "type": "fix", "text": "Updates page theme follows Studio light/dark mode in real time" }
+      ]
+    },
+    {
+      "version": "0.5.0",
+      "date": "2026-04-25",
+      "tag": "0.5.0",
+      "items": [
+        { "type": "infra", "text": "Reduced log noise in web modeler container" }
+      ]
+    },
+    {
       "version": "0.4.0",
       "date": "2026-04-25",
       "tag": "CURRENT",
