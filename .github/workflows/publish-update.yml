@@ -42,6 +42,13 @@ jobs:
         run: |
           DATE=$(date -u +%Y-%m-%d)
 
+          # GitHub Actions collapses multiline inputs into a single line when
+          # passed via env vars. Normalise by inserting a newline before each
+          # known type prefix so both newline-separated and space-collapsed
+          # inputs are handled correctly.
+          NORMALIZED=$(printf '%s' "$INPUT_CHANGELOG" \
+            | sed 's/ \(feat\|fix\|ui\|infra\):/\n\1:/g')
+
           # Build changelog items array from input lines
           ITEMS="[]"
           while IFS= read -r line; do
@@ -49,7 +56,7 @@ jobs:
             TYPE=$(echo "$line" | sed 's/^\s*//' | cut -d: -f1 | tr -d ' ')
             TEXT=$(echo "$line" | sed 's/^\s*//' | cut -d: -f2- | sed 's/^\s*//')
             ITEMS=$(echo "$ITEMS" | jq --arg t "$TYPE" --arg x "$TEXT" '. + [{"type": $t, "text": $x}]')
-          done <<< "$INPUT_CHANGELOG"
+          done <<< "$NORMALIZED"
 
           # Build the new changelog entry
           NEW_ENTRY=$(jq -n \

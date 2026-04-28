@@ -66,10 +66,9 @@
       "date": "2026-04-28",
       "tag": "CURRENT",
       "items": [
-        {
-          "type": "fix",
-          "text": "BPMN save permission error on Windows (Rancher Desktop) infra: Version bump now detects patch vs minor from commit types infra: Release checklist issue opened automatically after each merge"
-        }
+        { "type": "fix", "text": "BPMN save permission error on Windows (Rancher Desktop)" },
+        { "type": "infra", "text": "Version bump now detects patch vs minor from commit types" },
+        { "type": "infra", "text": "Release checklist issue opened automatically after each merge" }
       ]
     },
     {
